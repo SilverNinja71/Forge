@@ -6,9 +6,9 @@ its own repo and its own copy, so a fix here doesn't reach it. The full brief is
 
 ## Build, test, verify
 
-Forge needs full Xcode, because the Command Line Tools can't expand SwiftUI's `@Entry` macro. Xcode 26.1.1 is at
-`~/Downloads/Xcode.app` but isn't the active developer directory, so prefix every command with
-`DEVELOPER_DIR=$HOME/Downloads/Xcode.app/Contents/Developer`.
+Forge builds with the Command Line Tools or full Xcode. This Mac's active developer directory is now Xcode 26.1.1 at
+`~/Downloads/Xcode.app`; to use the Command Line Tools instead, prefix commands with
+`DEVELOPER_DIR=/Library/Developer/CommandLineTools`. Avoid SwiftUI's `@Entry` macro, which the Command Line Tools can't expand.
 
 ```bash
 swift build
@@ -19,9 +19,9 @@ swift build -c release --product ForgeSnapshots && .build/release/ForgeSnapshots
 Scripts/build-forge-app.sh                  # Forge.app (don't `open` it while testing)
 ```
 
-Compile for iPad (no simulator installed):
+Compile for iPad (needs Xcode):
 `swift build --target ForgeCore --triple arm64-apple-ios17.0 --sdk "$(xcrun --sdk iphoneos --show-sdk-path)" --scratch-path .build-ipad`.
-`bookmarkRoundTripResolvesTheSameFolder` fails because of this Mac, not the code.
+`bookmarkRoundTripResolvesTheSameFolder` can fail on this Mac: on 2026-11-02 it failed with Xcode and passed with the Command Line Tools.
 
 - `ForgeSnapshots <dir>` models a bracket through the real click handling, times the hot paths, checks save/reopen/delta
   save (prints ✓ / ✗ FAIL) and screenshots each screen in a window that is never shown. Look at the PNGs with Read.

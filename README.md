@@ -9,11 +9,9 @@ The full brief is in [`docs/SPEC.md`](docs/SPEC.md).
 
 ## Build & run (Mac)
 
-Needs macOS 14+ and full Xcode. The Command Line Tools alone can't build Forge, because it uses SwiftUI's `@Entry` macro.
-If Xcode isn't your active developer directory, point `DEVELOPER_DIR` at it first:
+Needs macOS 14+ and the Swift 6 toolchain (Xcode or just the Command Line Tools).
 
 ```bash
-export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer   # wherever your Xcode is
 Scripts/build-forge-app.sh       # builds Forge.app in this folder — double-click to run
 swift test                          # unit + GPU tests (headless)
 swift build -c release --product ForgeSnapshots && .build/release/ForgeSnapshots /tmp/forge-check
@@ -97,8 +95,8 @@ Tokens are kept in the Keychain, sign-in uses PKCE (no secrets in the app), and 
 
 - 106 Forge tests pass: expressions, every constraint kind, status colours, profiles, booleans, every solid feature
   checked against textbook volumes, parametric cascade, sketch editor, files, picking, and real AppKit mouse and key
-  events sent into the Mac view. The whole package's run of 239 tests, which includes the 133 sync tests, has one failure: `bookmarkRoundTripResolvesTheSameFolder`,
-  which depends on this Mac rather than on the code.
+  events sent into the Mac view. The whole package's run of 239 tests, which includes the 133 sync tests, passes with the Command Line
+  Tools. With Xcode, one test failed on this Mac: `bookmarkRoundTripResolvesTheSameFolder`.
 - `ForgeSnapshots` passes all its checks: drawing, dimensioning, red/black/blue status, extrude, sketch on a face, cut,
   fillet and chamfer picked by simulated clicks, changing a parameter (regenerates in about 60 ms), undo, rollback, all
   display modes, section caps, save/reopen/delta save, and Forge → local "cloud" folder → reopen. A 36-hole plate

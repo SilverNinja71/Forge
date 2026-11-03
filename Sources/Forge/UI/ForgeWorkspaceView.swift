@@ -1,9 +1,14 @@
 import SwiftUI
 import simd
 
+private struct ForgeSnapshotModeKey: EnvironmentKey { static let defaultValue = false }
+
 extension EnvironmentValues {
     /// True when screenshotting: the live Metal view is replaced by the same picture rendered off-screen.
-    @Entry public var forgeSnapshotMode = false
+    public var forgeSnapshotMode: Bool {
+        get { self[ForgeSnapshotModeKey.self] }
+        set { self[ForgeSnapshotModeKey.self] = newValue }
+    }
 }
 
 /// Everything you can search for with the S key.
